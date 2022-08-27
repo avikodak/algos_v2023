@@ -15,35 +15,35 @@
 class Solution {
 public:
     std::vector<int> getRow(int rowIndex) {
-        std::vector<int> first;
-        first.push_back(1);
-        std::vector<int> second;
+        std::vector<int> prev;
+        prev.push_back(1);
+        std::vector<int> current;
         bool readFromFirst = true;
         int targetSize;
         while(rowIndex--) {
             if (readFromFirst) {
-                second.clear();
-                second.push_back(1);
-                targetSize = first.size();
+                current.clear();
+                current.push_back(1);
+                targetSize = prev.size();
             } else {
-                first.clear();
-                first.push_back(1);
-                targetSize = second.size();
+                prev.clear();
+                prev.push_back(1);
+                targetSize = current.size();
             }
             for (int innerCounter = 0; innerCounter < targetSize - 1; innerCounter++) {
                 if (readFromFirst) {
-                    second.push_back(first[innerCounter] + first[innerCounter + 1]);
+                    current.push_back(prev[innerCounter] + prev[innerCounter + 1]);
                 } else {
-                    first.push_back(second[innerCounter] + second[innerCounter + 1]);
+                    prev.push_back(current[innerCounter] + current[innerCounter + 1]);
                 }
             }
             if (readFromFirst) {
-                second.push_back(1);
+                current.push_back(1);
             } else {
-                first.push_back(1);
+                prev.push_back(1);
             }
             readFromFirst = !readFromFirst;
         }
-        return readFromFirst ? first : second;
+        return readFromFirst ? prev : current;
     }
 };
